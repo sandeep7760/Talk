@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Talk</string>
+    <string name="txt_will_send_otp">We will send you an <b> One Time Password </b>to this mobile number</string>
+    <string name="verify_otp">Enter the <b> OTP </b> Code to verify your Phone Number</string>
+</resources>
