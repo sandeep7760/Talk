@@ -1,7 +1,9 @@
 package com.example.talk
 
+import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.content.Intent
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
@@ -20,11 +22,13 @@ class OtpActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var binding: ActivityOtpBinding
     private lateinit var checkInternet: InternetConnectivity
+    private val profile:Boolean = true
 
     var verificationId: String? = null
 
     var dialog: ProgressDialog? = null
 
+    @SuppressLint("SetTextI18n")
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -89,6 +93,9 @@ class OtpActivity : AppCompatActivity() {
                                 Toast.LENGTH_SHORT
                             ).show()
                             dialog!!.dismiss()
+                            val intent = Intent(this@OtpActivity, LoginActivity::class.java)
+                            startActivity(intent)
+                            finishAffinity()
                         } else {
                             Toast.makeText(
                                 this@OtpActivity,
@@ -96,6 +103,9 @@ class OtpActivity : AppCompatActivity() {
                                 Toast.LENGTH_SHORT
                             ).show()
                             dialog!!.dismiss()
+                            val intent = Intent(this@OtpActivity, LoginActivity::class.java)
+                            startActivity(intent)
+                            finishAffinity()
                         }
 
 
@@ -111,15 +121,20 @@ class OtpActivity : AppCompatActivity() {
 
 
         binding.otpView.setOtpCompletionListener { otp ->
+            binding.btnGetOtp.text = "VERIFYING..."
             val credential = PhoneAuthProvider.getCredential(
                 verificationId!!,
                 otp!!
             )
+
             if (checkInternet.isConnected(this)) {
                 try {
+
                     auth.signInWithCredential(credential).addOnCompleteListener { task ->
+
                         if (task.isSuccessful) {
-                            val intent = Intent(this@OtpActivity, MainActivity::class.java)
+                            val intent = Intent(this@OtpActivity, ProfileActivity::class.java)
+
                             startActivity(intent)
                             finishAffinity()
                         } else {
@@ -128,6 +143,7 @@ class OtpActivity : AppCompatActivity() {
                                 "Please enter Correct OTP.",
                                 Toast.LENGTH_SHORT
                             ).show()
+                            binding.btnGetOtp.text = "VERIFY"
                         }
                     }
                 } catch (e: Exception) {
@@ -137,6 +153,7 @@ class OtpActivity : AppCompatActivity() {
             } else {
                 Toast.makeText(this, "No Internet Connection", Toast.LENGTH_SHORT).show();
                 binding.otpView.text = null
+                binding.btnGetOtp.text = "VERIFY"
             }
 
         }

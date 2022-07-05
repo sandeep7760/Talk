@@ -3,16 +3,21 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Company Android Project/195/Talk/app/src/main/res/drawable/circle_bg.xml" value="0.2295" />
         <entry key="..\:/Company Android Project/195/Talk/app/src/main/res/drawable/ic_arrow_down.xml" value="0.193" />
         <entry key="..\:/Company Android Project/195/Talk/app/src/main/res/drawable/ic_baseline_power_settings_new_24.xml" value="0.2295" />
         <entry key="..\:/Company Android Project/195/Talk/app/src/main/res/drawable/ic_clear.xml" value="0.1955" />
         <entry key="..\:/Company Android Project/195/Talk/app/src/main/res/drawable/shape_btn_bg.xml" value="0.193" />
         <entry key="..\:/Company Android Project/195/Talk/app/src/main/res/drawable/shape_edit_bg.xml" value="0.1955" />
         <entry key="..\:/Company Android Project/195/Talk/app/src/main/res/drawable/shape_home_bg.xml" value="0.193" />
+        <entry key="..\:/Company Android Project/195/Talk/app/src/main/res/layout/activity_chat.xml" value="0.2609375" />
         <entry key="..\:/Company Android Project/195/Talk/app/src/main/res/layout/activity_login.xml" value="0.22" />
         <entry key="..\:/Company Android Project/195/Talk/app/src/main/res/layout/activity_main.xml" value="0.246875" />
         <entry key="..\:/Company Android Project/195/Talk/app/src/main/res/layout/activity_otp.xml" value="0.25" />
         <entry key="..\:/Company Android Project/195/Talk/app/src/main/res/layout/activity_otp2.xml" value="0.2609375" />
+        <entry key="..\:/Company Android Project/195/Talk/app/src/main/res/layout/activity_profile.xml" value="0.2609375" />
+        <entry key="..\:/Company Android Project/195/Talk/app/src/main/res/layout/demo_layout.xml" value="0.2609375" />
+        <entry key="..\:/Company Android Project/195/Talk/app/src/main/res/layout/row_conversation.xml" value="0.2609375" />
         <entry key="..\:/Company Android Project/195/Talk/app/src/main/res/layout/screen_splash.xml" value="0.2609375" />
         <entry key="..\:/Company Android Project/195/Talk/app/src/main/res/menu/signout.xml" value="0.2609375" />
       </map>
