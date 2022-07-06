@@ -1,4 +1,4 @@
-package com.example.talk
+package com.example.talk.activitys
 
 import android.annotation.SuppressLint
 import android.app.ProgressDialog
@@ -10,6 +10,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.talk.R
+import com.example.talk.models.User
+import com.example.talk.adapters.UsersAdapter
 import com.example.talk.databinding.ActivityMainBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -33,7 +36,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         val root = setContentView(binding.root)
-        title = "CHATS"
+        title = "Chats"
         auth = FirebaseAuth.getInstance()
         database = FirebaseDatabase.getInstance()
 
@@ -77,7 +80,7 @@ class MainActivity : AppCompatActivity() {
                 for (snapshot1 in snapshot.children) {
                     val user = snapshot1.getValue(User::class.java)
                     if (!user!!.uid.equals(FirebaseAuth.getInstance().uid)) {
-                        users.add(user!!)
+                        users.add(user)
                         count++
                     }
 
@@ -92,6 +95,14 @@ class MainActivity : AppCompatActivity() {
             override fun onCancelled(error: DatabaseError) {}
         })
 
+//       binding.bottomNavigationView.setOnNavigationItemSelectedListener {
+//            when(it.itemId){
+//                R.id.profile->startActivity(Intent(this@MainActivity,ProfileActivity::class.java))
+////                R.id.chats->setCurrentFragment(secondFragment)
+//
+//            }
+//            true
+//        }
 
         return root
 
@@ -114,6 +125,8 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, "Signing Out", Toast.LENGTH_SHORT).show()
             true
         }
+
+
         return true
     }
 }

@@ -36,9 +36,24 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Tap to chat"
+        android:maxLines="1"
+        android:maxLength="25"
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="@+id/username"
         app:layout_constraintTop_toBottomOf="@+id/username" />
+
+    <TextView
+        android:id="@+id/lastMsg2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/font_rg"
+        android:maxLines="1"
+        android:visibility="gone"
+        android:text="....."
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@+id/lastMsg"
+        app:layout_constraintTop_toTopOf="@+id/lastMsg" />
+
 
     <TextView
         android:id="@+id/msgTime"

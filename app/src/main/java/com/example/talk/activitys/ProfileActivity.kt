@@ -1,4 +1,4 @@
-package com.example.talk
+package com.example.talk.activitys
 
 import android.app.ProgressDialog
 import android.content.Intent
@@ -10,6 +10,8 @@ import android.view.View
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import com.example.talk.InternetConnectivity
+import com.example.talk.models.User
 import com.example.talk.databinding.ActivityProfileBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -55,7 +57,7 @@ class ProfileActivity : AppCompatActivity() {
 
         binding!!.continueBtn.setOnClickListener(View.OnClickListener {
             val name = binding!!.nameBox.text.toString()
-            val regexName = "^[a-zA-Z\\s]{3,}$"
+            val regexName = Regex("^[a-zA-Z\\s]{3,}$")
 
             if (name.isEmpty()) {
                 binding!!.nameBox.error = "Please Enter your Name"
@@ -73,6 +75,7 @@ class ProfileActivity : AppCompatActivity() {
                         if (task.isSuccessful) {
                             reference.downloadUrl.addOnSuccessListener { uri ->
                                 val imageUrl = uri.toString()
+
                                 val uid = auth!!.uid
                                 val phone = auth!!.currentUser!!.phoneNumber
                                 val name = binding!!.nameBox.text.toString()
@@ -91,7 +94,7 @@ class ProfileActivity : AppCompatActivity() {
                                             sharedPreferences.edit()
                                         editor.putString(
                                             "Name",
-                                            binding!!.nameBox.getText().toString()
+                                            binding!!.nameBox.text.toString()
                                         )
                                         editor.apply()
                                         startActivity(intent)
@@ -116,7 +119,7 @@ class ProfileActivity : AppCompatActivity() {
                             dialog!!.dismiss()
                             val intent = Intent(this@ProfileActivity, MainActivity::class.java)
                             val editor: SharedPreferences.Editor = sharedPreferences.edit()
-                            editor.putString("Name", binding!!.nameBox.getText().toString())
+                            editor.putString("Name", binding!!.nameBox.text.toString())
                             editor.apply()
                             startActivity(intent)
                             finish()

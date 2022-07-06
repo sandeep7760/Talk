@@ -1,4 +1,4 @@
-package com.example.talk
+package com.example.talk.adapters
 
 import android.content.Context
 import android.content.Intent
@@ -7,6 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.talk.R
+import com.example.talk.models.User
+import com.example.talk.activitys.ChatActivity
 import com.example.talk.databinding.RowConversationBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -42,10 +45,16 @@ class UsersAdapter(var context: Context, var users: ArrayList<User>) :
                             Long::class.java
                         )!!
                         val dateFormat = SimpleDateFormat("hh:mm a")
-                        holder.binding.msgTime.setText(dateFormat.format(Date(time)))
-                        holder.binding.lastMsg.setText(lastMsg)
+
+//                        holder.binding.msgTime.setText(dateFormat.format(Date(time)))
+                        holder.binding.msgTime.text = dateFormat.format(Date(time))
+//                        holder.binding.lastMsg.setText(lastMsg)
+                        holder.binding.lastMsg.text = lastMsg
+                        holder.binding.lastMsg2.visibility = View.VISIBLE
                     } else {
-                        holder.binding.lastMsg.setText("Tap to chat")
+                        holder.binding.lastMsg.text = "Tap to Chat"
+                        holder.binding.lastMsg2.visibility = View.GONE
+                        holder.binding.msgTime.text = null
                     }
                 }
 

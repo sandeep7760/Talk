@@ -1,14 +1,14 @@
-package com.example.talk
+package com.example.talk.activitys
 
 import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.content.Intent
-import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import com.example.talk.InternetConnectivity
 import com.example.talk.databinding.ActivityOtpBinding
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth

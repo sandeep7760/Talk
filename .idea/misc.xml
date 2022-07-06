@@ -3,6 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Company Android Project/195/Talk/app/src/main/res/drawable-v24/circle_green.xml" value="0.251" />
+        <entry key="..\:/Company Android Project/195/Talk/app/src/main/res/drawable-v24/ic_attachment.xml" value="0.251" />
+        <entry key="..\:/Company Android Project/195/Talk/app/src/main/res/drawable-v24/ic_chats.xml" value="0.251" />
+        <entry key="..\:/Company Android Project/195/Talk/app/src/main/res/drawable-v24/ic_left_arrow.xml" value="0.251" />
+        <entry key="..\:/Company Android Project/195/Talk/app/src/main/res/drawable-v24/ic_send.xml" value="0.251" />
+        <entry key="..\:/Company Android Project/195/Talk/app/src/main/res/drawable-v24/receive_drawable.xml" value="0.251" />
+        <entry key="..\:/Company Android Project/195/Talk/app/src/main/res/drawable-v24/sent_drawable.xml" value="0.251" />
         <entry key="..\:/Company Android Project/195/Talk/app/src/main/res/drawable/circle_bg.xml" value="0.2295" />
         <entry key="..\:/Company Android Project/195/Talk/app/src/main/res/drawable/ic_arrow_down.xml" value="0.193" />
         <entry key="..\:/Company Android Project/195/Talk/app/src/main/res/drawable/ic_baseline_power_settings_new_24.xml" value="0.2295" />
@@ -17,8 +24,11 @@
         <entry key="..\:/Company Android Project/195/Talk/app/src/main/res/layout/activity_otp2.xml" value="0.2609375" />
         <entry key="..\:/Company Android Project/195/Talk/app/src/main/res/layout/activity_profile.xml" value="0.2609375" />
         <entry key="..\:/Company Android Project/195/Talk/app/src/main/res/layout/demo_layout.xml" value="0.2609375" />
-        <entry key="..\:/Company Android Project/195/Talk/app/src/main/res/layout/row_conversation.xml" value="0.2609375" />
+        <entry key="..\:/Company Android Project/195/Talk/app/src/main/res/layout/item_receive.xml" value="0.2598958333333333" />
+        <entry key="..\:/Company Android Project/195/Talk/app/src/main/res/layout/item_sent.xml" value="0.2609375" />
+        <entry key="..\:/Company Android Project/195/Talk/app/src/main/res/layout/row_conversation.xml" value="0.33" />
         <entry key="..\:/Company Android Project/195/Talk/app/src/main/res/layout/screen_splash.xml" value="0.2609375" />
+        <entry key="..\:/Company Android Project/195/Talk/app/src/main/res/menu/menu.xml" value="0.2598958333333333" />
         <entry key="..\:/Company Android Project/195/Talk/app/src/main/res/menu/signout.xml" value="0.2609375" />
       </map>
     </option>

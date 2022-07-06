@@ -19,19 +19,20 @@
         android:theme="@style/Theme.Talk"
         tools:targetApi="31">
         <activity
-            android:name=".ChatActivity"
+            android:name=".activitys.ChatActivity"
+            android:theme="@style/Theme.Talk.NoActionBar"
             android:exported="false" />
         <activity
-            android:name=".ProfileActivity"
+            android:name=".activitys.ProfileActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".activitys.MainActivity"
             android:exported="false" />
         <activity
-            android:name=".OtpActivity"
+            android:name=".activitys.OtpActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".activitys.LoginActivity"
             android:exported="false" />
         <activity
             android:name=".SplashScreen"
