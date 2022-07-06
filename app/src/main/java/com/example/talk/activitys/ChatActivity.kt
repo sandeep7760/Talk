@@ -3,12 +3,16 @@ package com.example.talk.activitys
 import android.os.Bundle
 import android.os.Message
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.talk.R
 import com.example.talk.adapters.MessagesAdapter
 import com.example.talk.databinding.ActivityChatBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import java.util.*
 
@@ -16,7 +20,7 @@ class ChatActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityChatBinding
     private lateinit var adapter: MessagesAdapter
-    private lateinit var messages: ArrayList<Message>
+    private lateinit var messages: ArrayList<com.example.talk.models.Message>
     private lateinit var database: FirebaseDatabase
     private lateinit var storage: FirebaseStorage
 
@@ -34,6 +38,8 @@ class ChatActivity : AppCompatActivity() {
 
         database = FirebaseDatabase.getInstance()
         storage = FirebaseStorage.getInstance()
+
+        messages = ArrayList()
 
         val name = intent.getStringExtra("name")
         val profile = intent.getStringExtra("image")
@@ -54,6 +60,47 @@ class ChatActivity : AppCompatActivity() {
 
         senderRoom = senderUid + receiverUid
         receiverRoom = receiverUid + senderUid
+
+        adapter = MessagesAdapter(this, messages, senderRoom!!, receiverRoom!!)
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+        binding.recyclerView.adapter = adapter
+
+        database.reference.child("chats")
+            .child(senderRoom!!)
+            .child("messages")
+            .addValueEventListener(object : ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    messages.clear()
+                    for (snapshot1 in snapshot.children) {
+                        messages.clear()
+                        val message = snapshot1.getValue(com.example.talk.models.Message::class.java)
+                        message!!.messageId
+                        messages.add(message)
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    TODO("Not yet implemented")
+                }
+
+            })
+
+//        database.reference.child("chats")
+//            .child(senderRoom!!)
+//            .child("messages")
+//            .addValueEventListener(object : ValueEventListener {
+//                override fun onDataChange(snapshot: DataSnapshot) {
+//                    messages.clear()
+//                    for (snapshot1 in snapshot.children) {
+//                        val message = snapshot1.getValue(Message::class.java)
+//                        message.setMessageId(snapshot1.key)
+//                        messages.add(message!!)
+//                    }
+//                    adapter.notifyDataSetChanged()
+//                }
+//
+//                override fun onCancelled(error: DatabaseError) {}
+//            })
 
         binding.sendBtn.setOnClickListener {
 

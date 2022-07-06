@@ -11,9 +11,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.talk.R
-import com.example.talk.models.User
 import com.example.talk.adapters.UsersAdapter
 import com.example.talk.databinding.ActivityMainBinding
+import com.example.talk.models.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -52,14 +52,14 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, "Name $name", Toast.LENGTH_SHORT).show()
         }
 
-        database.reference.child("users").child(FirebaseAuth.getInstance().uid!!)
-            .addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    user = snapshot.getValue(User::class.java)
-                }
-
-                override fun onCancelled(error: DatabaseError) {}
-            })
+//        database.reference.child("users").child(FirebaseAuth.getInstance().uid!!)
+//            .addValueEventListener(object : ValueEventListener {
+//                override fun onDataChange(snapshot: DataSnapshot) {
+//                    user = snapshot.getValue(User::class.java)
+//                }
+//
+//                override fun onCancelled(error: DatabaseError) {}
+//            })
 
 
         usersAdapter = UsersAdapter(this, users)
@@ -112,8 +112,9 @@ class MainActivity : AppCompatActivity() {
 
         val sharedPreferences = getSharedPreferences("Data", MODE_PRIVATE)
 
-        menuInflater.inflate(R.menu.signout, menu)
-        val signOut = menu?.findItem(R.id.signOutMenu)
+        menuInflater.inflate(R.menu.menu1, menu)
+        val signOut = menu?.findItem(R.id.signout)
+        val profile = menu?.findItem(R.id.profile)
         signOut?.setOnMenuItemClickListener {
             auth.signOut()
             val editor = sharedPreferences.edit()
@@ -126,7 +127,13 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
+        profile?.setOnMenuItemClickListener {
+            val intent = Intent(this@MainActivity, ProfileActivity::class.java)
+            startActivity(intent)
+            true
+        }
 
         return true
     }
+
 }
