@@ -2,38 +2,46 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activityProfile"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.LoginActivity">
+    android:background="#f9f9f9"
+    tools:context=".activities.CurrentLoginProfile">
 
-    <ImageView
+
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imageView"
-        android:layout_width="match_parent"
-        android:layout_height="220dp"
-        android:src="@drawable/ic_chat_bg"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="30dp"
+        android:src="@drawable/ic_other_user"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
     <LinearLayout
-        android:layout_marginTop="200dp"
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="30dp"
         android:background="@drawable/shape_home_bg"
         android:elevation="5dp"
         android:orientation="vertical"
         android:padding="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/view6"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageView">
+        app:layout_constraintTop_toBottomOf="@+id/imageView">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:fontFamily="@font/font_semi"
-            android:text="Welcome!"
+            android:text="Profile Info"
             android:textColor="@color/black"
             android:textSize="25sp" />
 
@@ -44,18 +52,11 @@
             android:layout_marginTop="15dp"
             android:fontFamily="@font/font_rg"
             android:gravity="start"
-            android:text="@string/txt_will_send_otp"
+            android:text="Update your Name and optional Profile Image."
             android:textColor="@color/black"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            tools:ignore="HardcodedText" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:fontFamily="@font/font_rg"
-            android:text="Enter Mobile Number"
-            android:textColor="@color/black"
-            android:textSize="18sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -64,34 +65,25 @@
             android:background="@drawable/shape_edit_bg"
             android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/txt_country_code"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:fontFamily="@font/font_semi"
-                android:gravity="center"
-                android:padding="6dp"
-                android:text="+91"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                app:drawableEndCompat="@drawable/ic_arrow_down" />
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edt_mobile"
+                android:id="@+id/nameBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
                 android:fontFamily="@font/font_semi"
-                android:inputType="number"
-                android:maxLength="10"
+                android:hint="Type Your Name"
+                android:inputType="text"
                 android:padding="10dp"
                 android:textColor="@color/black"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                tools:ignore="TouchTargetSizeCheck" />
+
         </LinearLayout>
 
+
         <TextView
-            android:id="@+id/btn_get_otp"
+            android:id="@+id/continueBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
@@ -99,9 +91,34 @@
             android:fontFamily="@font/font_semi"
             android:gravity="center"
             android:padding="8dp"
-            android:text="GET OTP"
+            android:text="UPDATE PROFILE"
             android:textColor="@color/white"
             android:textSize="20sp" />
     </LinearLayout>
 
+    <View
+        android:id="@+id/view6"
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:background="@drawable/gradient"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FCFCFD"
+        app:elevation="5dp"
+        app:itemIconTint="@drawable/selector1"
+        app:itemTextColor="@drawable/selector1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/menu1" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
+

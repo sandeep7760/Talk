@@ -1,4 +1,4 @@
-package com.example.talk.activitys
+package com.example.talk.activities
 
 import android.content.Intent
 import android.os.Build

@@ -1,4 +1,4 @@
-package com.example.talk.activitys
+package com.example.talk.activities
 
 import android.annotation.SuppressLint
 import android.app.ProgressDialog
@@ -14,6 +14,7 @@ import com.example.talk.R
 import com.example.talk.adapters.UsersAdapter
 import com.example.talk.databinding.ActivityMainBinding
 import com.example.talk.models.User
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -36,7 +37,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         val root = setContentView(binding.root)
-        title = "Chats"
+        title = "TalkApp"
         auth = FirebaseAuth.getInstance()
         database = FirebaseDatabase.getInstance()
 
@@ -95,26 +96,56 @@ class MainActivity : AppCompatActivity() {
             override fun onCancelled(error: DatabaseError) {}
         })
 
-//       binding.bottomNavigationView.setOnNavigationItemSelectedListener {
-//            when(it.itemId){
-//                R.id.profile->startActivity(Intent(this@MainActivity,ProfileActivity::class.java))
-////                R.id.chats->setCurrentFragment(secondFragment)
+//        binding.bottomNavigationView.setOnNavigationItemSelectedListener {
+//
+//            when (it.itemId) {
+//                com.example.talk.R.id.chats -> return@setOnNavigationItemSelectedListener true
+//                com.example.talk.R.id.user_profile -> {
+//                    startActivity(Intent(this@MainActivity, CurrentLoginProfile::class.java))
+//                    overridePendingTransition(0, 0)
+//                    return@setOnNavigationItemSelectedListener true
+//                }
 //
 //            }
-//            true
+//            false
+//
 //        }
+
+        binding!!.bottomNavigationView.setOnNavigationItemSelectedListener(BottomNavigationView.OnNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+
+                com.example.talk.R.id.chats -> return@OnNavigationItemSelectedListener true
+                com.example.talk.R.id.user_profile -> {
+                    startActivity(Intent(this@MainActivity, CurrentLoginProfile::class.java))
+                    overridePendingTransition(0, 0)
+                    return@OnNavigationItemSelectedListener true
+                }
+            }
+            false
+        })
 
         return root
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val currentId = FirebaseAuth.getInstance().uid
+        database.reference.child("presence").child(currentId!!).setValue("Online")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        val currentId = FirebaseAuth.getInstance().uid
+        database.reference.child("presence").child(currentId!!).setValue("Offline")
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
 
         val sharedPreferences = getSharedPreferences("Data", MODE_PRIVATE)
 
-        menuInflater.inflate(R.menu.menu1, menu)
-        val signOut = menu?.findItem(R.id.signout)
-        val profile = menu?.findItem(R.id.profile)
+        menuInflater.inflate(R.menu.signout, menu)
+        val signOut = menu?.findItem(R.id.signOutMenu)
         signOut?.setOnMenuItemClickListener {
             auth.signOut()
             val editor = sharedPreferences.edit()
@@ -127,11 +158,6 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
-        profile?.setOnMenuItemClickListener {
-            val intent = Intent(this@MainActivity, ProfileActivity::class.java)
-            startActivity(intent)
-            true
-        }
 
         return true
     }

@@ -1,7 +1,13 @@
-package com.example.talk.activitys
+package com.example.talk.activities
 
+import android.annotation.SuppressLint
+import android.os.Build
 import android.os.Bundle
-import android.os.Message
+import android.os.Handler
+import android.text.Editable
+import android.text.TextWatcher
+import android.view.View
+import android.view.View.OnLayoutChangeListener
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
@@ -15,6 +21,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import java.util.*
+
 
 class ChatActivity : AppCompatActivity() {
 
@@ -30,6 +37,7 @@ class ChatActivity : AppCompatActivity() {
     var senderRoom: String? = null
     var receiverRoom: String? = null
 
+    @SuppressLint("ObsoleteSdkInt")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -58,25 +66,59 @@ class ChatActivity : AppCompatActivity() {
         receiverUid = intent.getStringExtra("uid")
         senderUid = FirebaseAuth.getInstance().uid
 
+        database.reference.child("presence").child(receiverUid!!)
+            .addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.exists()) {
+                        val status = snapshot.getValue(String::class.java)
+                        if (!status!!.isEmpty()) {
+                            if (status == "Offline") {
+                                binding.status.visibility = View.GONE
+                            } else {
+                                binding.status.text = status
+                                binding.status.visibility = View.VISIBLE
+                            }
+                        }
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {}
+            })
+
         senderRoom = senderUid + receiverUid
         receiverRoom = receiverUid + senderUid
 
-        adapter = MessagesAdapter(this, messages, senderRoom!!, receiverRoom!!)
+        adapter = MessagesAdapter(this, messages)
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.adapter = adapter
+
+        if (Build.VERSION.SDK_INT >= 11) {
+            binding.recyclerView.addOnLayoutChangeListener(OnLayoutChangeListener { v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom ->
+                if (bottom < oldBottom) {
+                    binding.recyclerView.postDelayed(Runnable {
+                        binding.recyclerView.smoothScrollToPosition(
+                            binding.recyclerView.adapter?.itemCount!! - 1
+                        )
+                    }, 100)
+                }
+            })
+        }
+
 
         database.reference.child("chats")
             .child(senderRoom!!)
             .child("messages")
-            .addValueEventListener(object : ValueEventListener{
+            .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     messages.clear()
                     for (snapshot1 in snapshot.children) {
-                        messages.clear()
-                        val message = snapshot1.getValue(com.example.talk.models.Message::class.java)
+                        val message =
+                            snapshot1.getValue(com.example.talk.models.Message::class.java)
                         message!!.messageId
                         messages.add(message)
                     }
+                    binding.recyclerView.scrollToPosition(messages.size-1)
+                    adapter.notifyDataSetChanged()
                 }
 
                 override fun onCancelled(error: DatabaseError) {
@@ -84,23 +126,6 @@ class ChatActivity : AppCompatActivity() {
                 }
 
             })
-
-//        database.reference.child("chats")
-//            .child(senderRoom!!)
-//            .child("messages")
-//            .addValueEventListener(object : ValueEventListener {
-//                override fun onDataChange(snapshot: DataSnapshot) {
-//                    messages.clear()
-//                    for (snapshot1 in snapshot.children) {
-//                        val message = snapshot1.getValue(Message::class.java)
-//                        message.setMessageId(snapshot1.key)
-//                        messages.add(message!!)
-//                    }
-//                    adapter.notifyDataSetChanged()
-//                }
-//
-//                override fun onCancelled(error: DatabaseError) {}
-//            })
 
         binding.sendBtn.setOnClickListener {
 
@@ -113,7 +138,7 @@ class ChatActivity : AppCompatActivity() {
             val date = Date()
             val message = com.example.talk.models.Message(
                 "", messageText, senderUid,
-                "",date.time
+                "", date.time
             )
             binding.messageBox.text = null
 
@@ -142,7 +167,35 @@ class ChatActivity : AppCompatActivity() {
 
         }
 
+        val handler = Handler()
+        binding.messageBox.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable) {
+                database.reference.child("presence").child(senderUid!!).setValue("typing...")
+                handler.removeCallbacksAndMessages(null)
+                handler.postDelayed(userStoppedTyping, 1000)
+            }
+
+            var userStoppedTyping =
+                Runnable {
+                    database.reference.child("presence").child(senderUid!!).setValue("Online")
+                }
+        })
+
 
         return root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val currentId = FirebaseAuth.getInstance().uid
+        database.reference.child("presence").child(currentId!!).setValue("Online")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        val currentId = FirebaseAuth.getInstance().uid
+        database.reference.child("presence").child(currentId!!).setValue("Offline")
     }
 }

@@ -1,4 +1,4 @@
-package com.example.talk.activitys
+package com.example.talk.activities
 
 import android.app.ProgressDialog
 import android.content.Intent
@@ -11,10 +11,13 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.example.talk.InternetConnectivity
-import com.example.talk.models.User
 import com.example.talk.databinding.ActivityProfileBinding
+import com.example.talk.models.User
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import java.util.*
 
@@ -26,7 +29,7 @@ class ProfileActivity : AppCompatActivity() {
     var storage: FirebaseStorage? = null
     var selectedImage: Uri? = null
     var dialog: ProgressDialog? = null
-    lateinit var checkInternet : InternetConnectivity
+    lateinit var checkInternet: InternetConnectivity
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,6 +50,8 @@ class ProfileActivity : AppCompatActivity() {
         val sharedPreferences = getSharedPreferences("Data", MODE_PRIVATE)
 
         supportActionBar!!.hide()
+
+        existingUser()
 
         binding!!.imageView.setOnClickListener {
             val intent = Intent()
@@ -125,14 +130,101 @@ class ProfileActivity : AppCompatActivity() {
                             finish()
                         }
                 }
-            }
-            else{
+            } else {
                 dialog!!.dismiss()
-                Toast.makeText(this,"No Internet Connection",Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "No Internet Connection", Toast.LENGTH_LONG).show()
             }
         })
 
         return root
+    }
+
+    @RequiresApi(Build.VERSION_CODES.M)
+    private fun existingUser() {
+
+        dialog = ProgressDialog(this)
+        dialog!!.setMessage("Please Wait...")
+        dialog!!.setCancelable(false)
+        dialog!!.show()
+
+
+        val sharedPreferences = getSharedPreferences("Data", MODE_PRIVATE)
+
+        try {
+            if (checkInternet.isConnected(this)) {
+                database!!.reference.child("users")
+                    .addValueEventListener(object : ValueEventListener {
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            for (snapshot1 in snapshot.children) {
+                                val user = snapshot1.getValue(User::class.java)
+                                if (user!!.uid.equals(FirebaseAuth.getInstance().uid)) {
+                                    Toast.makeText(
+                                        this@ProfileActivity,
+                                        "User Found",
+                                        Toast.LENGTH_LONG
+                                    )
+                                        .show()
+                                    val editor: SharedPreferences.Editor = sharedPreferences.edit()
+                                    editor.putString("Name", "User Exist")
+                                    editor.apply()
+                                    startActivity(
+                                        Intent(
+                                            this@ProfileActivity,
+                                            MainActivity::class.java
+                                        )
+                                    )
+                                    finish()
+                                }
+                            }
+                            Toast.makeText(this@ProfileActivity, "No User Found", Toast.LENGTH_LONG)
+                                .show()
+                            dialog!!.dismiss()
+                        }
+
+                        override fun onCancelled(error: DatabaseError) {
+                            Toast.makeText(this@ProfileActivity, "No User Found", Toast.LENGTH_LONG)
+                                .show()
+                            dialog!!.dismiss()
+                        }
+
+                    })
+            } else {
+                Toast.makeText(this@ProfileActivity, "No Internet Connection", Toast.LENGTH_LONG)
+                    .show()
+                finish()
+            }
+
+        } catch (e: Exception) {
+            Toast.makeText(this@ProfileActivity, "Failed to Connect Server", Toast.LENGTH_LONG)
+                .show()
+
+            finish()
+        }
+
+
+//        database.reference.child("users").addValueEventListener(object : ValueEventListener {
+//            @SuppressLint("NotifyDataSetChanged")
+//            override fun onDataChange(snapshot: DataSnapshot) {
+//                users.clear()
+//
+//                var count = 0;
+//                for (snapshot1 in snapshot.children) {
+//                    val user = snapshot1.getValue(User::class.java)
+//                    if (!user!!.uid.equals(FirebaseAuth.getInstance().uid)) {
+//                        users.add(user)
+//                        count++
+//                    }
+//
+//                }
+//                if (count == 0) {
+//                    binding.emptyUser.visibility = View.VISIBLE
+//                }
+//                binding.recyclerView.hideShimmerAdapter()
+//                usersAdapter.notifyDataSetChanged()
+//            }
+//
+//            override fun onCancelled(error: DatabaseError) {}
+//        })
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

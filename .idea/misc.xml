@@ -10,22 +10,31 @@
         <entry key="..\:/Company Android Project/195/Talk/app/src/main/res/drawable-v24/ic_send.xml" value="0.251" />
         <entry key="..\:/Company Android Project/195/Talk/app/src/main/res/drawable-v24/receive_drawable.xml" value="0.251" />
         <entry key="..\:/Company Android Project/195/Talk/app/src/main/res/drawable-v24/sent_drawable.xml" value="0.251" />
+        <entry key="..\:/Company Android Project/195/Talk/app/src/main/res/drawable/bg_msg_left.xml" value="0.2385" />
+        <entry key="..\:/Company Android Project/195/Talk/app/src/main/res/drawable/bg_msg_right.xml" value="0.2385" />
         <entry key="..\:/Company Android Project/195/Talk/app/src/main/res/drawable/circle_bg.xml" value="0.2295" />
+        <entry key="..\:/Company Android Project/195/Talk/app/src/main/res/drawable/gradient.xml" value="0.2385" />
         <entry key="..\:/Company Android Project/195/Talk/app/src/main/res/drawable/ic_arrow_down.xml" value="0.193" />
         <entry key="..\:/Company Android Project/195/Talk/app/src/main/res/drawable/ic_baseline_power_settings_new_24.xml" value="0.2295" />
         <entry key="..\:/Company Android Project/195/Talk/app/src/main/res/drawable/ic_clear.xml" value="0.1955" />
+        <entry key="..\:/Company Android Project/195/Talk/app/src/main/res/drawable/icon_tick.xml" value="0.2385" />
+        <entry key="..\:/Company Android Project/195/Talk/app/src/main/res/drawable/selector.xml" value="0.2285" />
+        <entry key="..\:/Company Android Project/195/Talk/app/src/main/res/drawable/selector1.xml" value="0.2285" />
         <entry key="..\:/Company Android Project/195/Talk/app/src/main/res/drawable/shape_btn_bg.xml" value="0.193" />
         <entry key="..\:/Company Android Project/195/Talk/app/src/main/res/drawable/shape_edit_bg.xml" value="0.1955" />
         <entry key="..\:/Company Android Project/195/Talk/app/src/main/res/drawable/shape_home_bg.xml" value="0.193" />
+        <entry key="..\:/Company Android Project/195/Talk/app/src/main/res/drawable/v_bubble_corner_left.xml" value="0.2385" />
+        <entry key="..\:/Company Android Project/195/Talk/app/src/main/res/drawable/v_bubble_corner_right.xml" value="0.2385" />
         <entry key="..\:/Company Android Project/195/Talk/app/src/main/res/layout/activity_chat.xml" value="0.2609375" />
+        <entry key="..\:/Company Android Project/195/Talk/app/src/main/res/layout/activity_current_login_profile.xml" value="0.18" />
         <entry key="..\:/Company Android Project/195/Talk/app/src/main/res/layout/activity_login.xml" value="0.22" />
-        <entry key="..\:/Company Android Project/195/Talk/app/src/main/res/layout/activity_main.xml" value="0.246875" />
+        <entry key="..\:/Company Android Project/195/Talk/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/Company Android Project/195/Talk/app/src/main/res/layout/activity_otp.xml" value="0.25" />
         <entry key="..\:/Company Android Project/195/Talk/app/src/main/res/layout/activity_otp2.xml" value="0.2609375" />
         <entry key="..\:/Company Android Project/195/Talk/app/src/main/res/layout/activity_profile.xml" value="0.2609375" />
         <entry key="..\:/Company Android Project/195/Talk/app/src/main/res/layout/demo_layout.xml" value="0.2609375" />
-        <entry key="..\:/Company Android Project/195/Talk/app/src/main/res/layout/item_receive.xml" value="0.2598958333333333" />
-        <entry key="..\:/Company Android Project/195/Talk/app/src/main/res/layout/item_sent.xml" value="0.2609375" />
+        <entry key="..\:/Company Android Project/195/Talk/app/src/main/res/layout/item_receive.xml" value="0.33" />
+        <entry key="..\:/Company Android Project/195/Talk/app/src/main/res/layout/item_sent.xml" value="0.33" />
         <entry key="..\:/Company Android Project/195/Talk/app/src/main/res/layout/row_conversation.xml" value="0.33" />
         <entry key="..\:/Company Android Project/195/Talk/app/src/main/res/layout/screen_splash.xml" value="0.2609375" />
         <entry key="..\:/Company Android Project/195/Talk/app/src/main/res/menu/menu.xml" value="0.2598958333333333" />
@@ -39,5 +48,12 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="1.25" />
+      </ProjectState>
+    </option>
   </component>
 </project>

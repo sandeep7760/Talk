@@ -1,31 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layoutChat"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="5dp">
+    android:layout_marginTop="10dp">
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
+    <RelativeLayout
+        android:id="@+id/message_send"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/sent_drawable"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="14dp"
+        android:layout_toLeftOf="@id/test_arrow"
+        android:background="@drawable/bg_msg_right"
+        android:paddingLeft="15dp"
+        android:paddingTop="5dp"
+        android:paddingRight="15dp"
+        android:paddingBottom="7dp"
+        tools:ignore="UselessParent">
 
         <TextView
             android:id="@+id/message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="15dp"
-            android:paddingTop="5dp"
-            android:paddingRight="10dp"
-            android:paddingBottom="5dp"
-            android:text="TextView"
-            android:textSize="13sp" />
-    </LinearLayout>
+            android:layout_marginEnd="10dp"
+            android:maxWidth="200dp"
+            android:text="demo Text"
+            android:textColor="#222"
+            android:textSize="17sp" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <!--        <TextClock-->
+        <!--            android:id="@+id/msgTime"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_alignBottom="@+id/message"-->
+        <!--            android:layout_toEndOf="@+id/message"-->
+        <!--            android:text="1:30 P.M."-->
+        <!--            android:textColor="@color/white" />-->
+
+        <TextView
+            android:id="@+id/msgTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/message"
+            android:layout_toEndOf="@+id/message"
+            android:text="1:30 P.M."
+            android:textColor="#E4E4E4"
+            android:textSize="12sp" />
+
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/test_arrow"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="-6dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginRight="0dp"
+        android:background="@null"
+        android:scaleX="1.5"
+        android:src="@drawable/v_bubble_corner_right" />
+</RelativeLayout>
+
+<!--<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--    xmlns:tools="http://schemas.android.com/tools"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="wrap_content"-->
+<!--    android:layout_marginTop="5dp">-->
+
+<!--    <LinearLayout-->
+<!--        android:id="@+id/linearLayout"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:background="@drawable/sent_drawable"-->
+<!--        android:orientation="vertical"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent">-->
+
+
+<!--        <TextView-->
+<!--            android:id="@+id/message"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:paddingLeft="15dp"-->
+<!--            android:paddingTop="5dp"-->
+<!--            android:paddingRight="10dp"-->
+<!--            android:paddingBottom="5dp"-->
+<!--            android:text="TextView"-->
+<!--            android:textSize="13sp" />-->
+<!--    </LinearLayout>-->
+
+<!--</androidx.constraintlayout.widget.ConstraintLayout>-->

@@ -19,20 +19,23 @@
         android:theme="@style/Theme.Talk"
         tools:targetApi="31">
         <activity
-            android:name=".activitys.ChatActivity"
-            android:theme="@style/Theme.Talk.NoActionBar"
+            android:name=".activities.CurrentLoginProfile"
             android:exported="false" />
         <activity
-            android:name=".activitys.ProfileActivity"
+            android:name=".activities.ChatActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Talk.NoActionBar" />
+        <activity
+            android:name=".activities.ProfileActivity"
             android:exported="false" />
         <activity
-            android:name=".activitys.MainActivity"
+            android:name=".activities.MainActivity"
             android:exported="false" />
         <activity
-            android:name=".activitys.OtpActivity"
+            android:name=".activities.OtpActivity"
             android:exported="false" />
         <activity
-            android:name=".activitys.LoginActivity"
+            android:name=".activities.LoginActivity"
             android:exported="false" />
         <activity
             android:name=".SplashScreen"

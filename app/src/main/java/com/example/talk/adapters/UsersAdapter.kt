@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.talk.R
 import com.example.talk.models.User
-import com.example.talk.activitys.ChatActivity
+import com.example.talk.activities.ChatActivity
 import com.example.talk.databinding.RowConversationBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -61,7 +61,8 @@ class UsersAdapter(var context: Context, var users: ArrayList<User>) :
                 override fun onCancelled(error: DatabaseError) {}
             })
 
-        holder.binding.username.setText(user.name)
+        holder.binding.username.text = user.name
+        holder.binding.phone.text = user.phoneNumber
         Glide.with(context).load(user.profileImage)
             .placeholder(R.drawable.ic_other_user)
             .into(holder.binding.profile)
