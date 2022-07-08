@@ -130,14 +130,12 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        val currentId = FirebaseAuth.getInstance().uid
-        database.reference.child("presence").child(currentId!!).setValue("Online")
+
     }
 
     override fun onPause() {
         super.onPause()
-        val currentId = FirebaseAuth.getInstance().uid
-        database.reference.child("presence").child(currentId!!).setValue("Offline")
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

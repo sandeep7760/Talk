@@ -44,6 +44,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="15dp"
+                android:animateLayoutChanges="true"
                 android:gravity="center"
                 android:orientation="vertical">
 
@@ -69,7 +70,17 @@
         </LinearLayout>
 
     </androidx.appcompat.widget.Toolbar>
-
+    <TextView
+        android:id="@+id/typing"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        app:layout_constraintBottom_toTopOf="@id/cardView"
+        app:layout_constraintStart_toStartOf="@id/cardView"
+        android:text="Typing.."
+        android:textColor="@color/black"
+        android:layout_marginBottom="20dp"
+        android:visibility="gone" />
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="0dp"

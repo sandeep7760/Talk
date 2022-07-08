@@ -3,6 +3,7 @@ package com.example.talk.activities
 import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.os.Handler
 import android.text.Editable
 import android.text.TextWatcher
@@ -12,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.talk.R
+import com.example.talk.TimeAgo
 import com.example.talk.adapters.MessagesAdapter
 import com.example.talk.databinding.ActivityChatBinding
 import com.google.firebase.auth.FirebaseAuth
@@ -25,6 +27,8 @@ import java.util.*
 
 class ChatActivity : AppCompatActivity() {
 
+    private var otherUserTime: Long?=0
+    private var timerOnline: CountDownTimer? = null
     private lateinit var binding: ActivityChatBinding
     private lateinit var adapter: MessagesAdapter
     private lateinit var messages: ArrayList<com.example.talk.models.Message>
@@ -40,10 +44,8 @@ class ChatActivity : AppCompatActivity() {
     @SuppressLint("ObsoleteSdkInt")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityChatBinding.inflate(layoutInflater)
         val root = setContentView(binding.root)
-
         database = FirebaseDatabase.getInstance()
         storage = FirebaseStorage.getInstance()
 
@@ -65,20 +67,22 @@ class ChatActivity : AppCompatActivity() {
 
         receiverUid = intent.getStringExtra("uid")
         senderUid = FirebaseAuth.getInstance().uid
+        database.reference.child("presence").child(receiverUid!!).get().addOnSuccessListener {
+            otherUserTime = it.getValue(Long::class.java)
+       }
 
-        database.reference.child("presence").child(receiverUid!!)
+
+        database.reference.child("typing").child(receiverUid!!)
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()) {
-                        val status = snapshot.getValue(String::class.java)
-                        if (!status!!.isEmpty()) {
-                            if (status == "Offline") {
-                                binding.status.visibility = View.GONE
-                            } else {
-                                binding.status.text = status
-                                binding.status.visibility = View.VISIBLE
-                            }
+                        var status = snapshot.getValue(String::class.java)
+                        if (status.isNullOrBlank()) {
+                            binding.typing.visibility = View.GONE
+                        } else {
+                            binding.typing.visibility = View.VISIBLE
                         }
+
                     }
                 }
 
@@ -117,7 +121,7 @@ class ChatActivity : AppCompatActivity() {
                         message!!.messageId
                         messages.add(message)
                     }
-                    binding.recyclerView.scrollToPosition(messages.size-1)
+                    binding.recyclerView.scrollToPosition(messages.size - 1)
                     adapter.notifyDataSetChanged()
                 }
 
@@ -172,14 +176,14 @@ class ChatActivity : AppCompatActivity() {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
             override fun afterTextChanged(s: Editable) {
-                database.reference.child("presence").child(senderUid!!).setValue("typing...")
+                database.reference.child("typing").child(senderUid!!).setValue("typing...")
                 handler.removeCallbacksAndMessages(null)
                 handler.postDelayed(userStoppedTyping, 1000)
             }
 
             var userStoppedTyping =
                 Runnable {
-                    database.reference.child("presence").child(senderUid!!).setValue("Online")
+                    database.reference.child("typing").child(senderUid!!).setValue("")
                 }
         })
 
@@ -189,13 +193,41 @@ class ChatActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        val currentId = FirebaseAuth.getInstance().uid
-        database.reference.child("presence").child(currentId!!).setValue("Online")
+        updateOnline()
+    }
+
+    private fun updateOnline() {
+        timerOnline = object : CountDownTimer(Long.MAX_VALUE, 1000) {
+            override fun onTick(millisUntilFinished: Long) {
+                val currentId = FirebaseAuth.getInstance().uid
+                database.reference.child("presence").child(currentId!!)
+                    .setValue(System.currentTimeMillis())
+
+                database.reference.child("presence").child(receiverUid!!).get().addOnSuccessListener {
+                    otherUserTime = it.getValue(Long::class.java)
+                }
+                otherUserTime?.let {
+                    val current = System.currentTimeMillis()
+                    if ((current - it) > 5000) {
+                        binding.status.text=TimeAgo.getTimeAgo(it)
+                        binding.status.visibility = View.VISIBLE
+                    } else {
+                        binding.status.text="Online"
+                        binding.status.visibility = View.VISIBLE
+                    }
+                }
+
+            }
+
+            override fun onFinish() {
+
+            }
+        }
+        timerOnline?.start()
     }
 
     override fun onPause() {
         super.onPause()
-        val currentId = FirebaseAuth.getInstance().uid
-        database.reference.child("presence").child(currentId!!).setValue("Offline")
+        timerOnline?.cancel()
     }
 }
