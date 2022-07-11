@@ -27,7 +27,7 @@ import java.util.*
 
 class ChatActivity : AppCompatActivity() {
 
-    private var otherUserTime: Long?=0
+    private var otherUserTime: Long? = 0
     private var timerOnline: CountDownTimer? = null
     private lateinit var binding: ActivityChatBinding
     private lateinit var adapter: MessagesAdapter
@@ -69,7 +69,7 @@ class ChatActivity : AppCompatActivity() {
         senderUid = FirebaseAuth.getInstance().uid
         database.reference.child("presence").child(receiverUid!!).get().addOnSuccessListener {
             otherUserTime = it.getValue(Long::class.java)
-       }
+        }
 
 
         database.reference.child("typing").child(receiverUid!!)
@@ -203,16 +203,17 @@ class ChatActivity : AppCompatActivity() {
                 database.reference.child("presence").child(currentId!!)
                     .setValue(System.currentTimeMillis())
 
-                database.reference.child("presence").child(receiverUid!!).get().addOnSuccessListener {
-                    otherUserTime = it.getValue(Long::class.java)
-                }
+                database.reference.child("presence").child(receiverUid!!).get()
+                    .addOnSuccessListener {
+                        otherUserTime = it.getValue(Long::class.java)
+                    }
                 otherUserTime?.let {
                     val current = System.currentTimeMillis()
                     if ((current - it) > 5000) {
-                        binding.status.text=TimeAgo.getTimeAgo(it)
+                        binding.status.text = TimeAgo.getTimeAgo(it)
                         binding.status.visibility = View.VISIBLE
                     } else {
-                        binding.status.text="Online"
+                        binding.status.text = "Online"
                         binding.status.visibility = View.VISIBLE
                     }
                 }

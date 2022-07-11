@@ -20,7 +20,7 @@ public class TimeAgo {
 
 
         final long diff = now - time;
-        Log.e("Differencew",""+diff);
+        Log.e("Difference", "" + diff);
         if (diff < MINUTE_MILLIS) {
             return "just now";
         } else if (diff < 2 * MINUTE_MILLIS) {
@@ -36,4 +36,5 @@ public class TimeAgo {
         } else {
             return diff / DAY_MILLIS + " days ago";
         }
-    }}
+    }
+}

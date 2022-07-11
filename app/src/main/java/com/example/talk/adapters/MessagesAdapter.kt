@@ -17,7 +17,7 @@ class MessagesAdapter(
     var context: Context,
     var messages: java.util.ArrayList<com.example.talk.models.Message>,
 
-) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     //    context: Context
 //    var messages: java.util.ArrayList<Message> = ArrayList()
